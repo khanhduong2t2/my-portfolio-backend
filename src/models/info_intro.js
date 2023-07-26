@@ -11,6 +11,14 @@ const infoIntro = new mongoose.Schema(
             type: String,
             required: true,
         },
+        title_vi: {
+            type: String,
+            required: true,
+        },
+        title_en: {
+            type: String,
+            required: true,
+        },
         content_vi: {
             type: String,
             required: true,

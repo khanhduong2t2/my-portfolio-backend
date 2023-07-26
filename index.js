@@ -9,11 +9,11 @@ app.use(bodyParser.json());
 require('./src/config/database/index');
 
 // Import route
-const introRouter = require('./src/routes/introRouter');
-const projectRouter = require('./src/routes/projectRouter');
+const introRouter = require('./src/routes/IntroRouter');
+const commonRouter = require('./src/routes/CommonRouter');
 
 app.use('/v1/portfolio/intro', introRouter);
-app.use('/v1/portfolio/project', projectRouter);
+app.use('/v1/portfolio/common', commonRouter);
 
 const PORT = process.env.PORT;
 app.listen(PORT, async (req, res, next) => {
