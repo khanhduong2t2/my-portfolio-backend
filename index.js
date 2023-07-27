@@ -9,9 +9,11 @@ app.use(bodyParser.json());
 require('./src/config/database/index');
 
 // Import route
+const appRouter = require('./src/routes/AppRouter');
 const introRouter = require('./src/routes/IntroRouter');
 const commonRouter = require('./src/routes/CommonRouter');
 
+app.use('/v1/portfolio/app', appRouter);
 app.use('/v1/portfolio/intro', introRouter);
 app.use('/v1/portfolio/common', commonRouter);
 
