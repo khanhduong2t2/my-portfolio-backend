@@ -1,9 +1,15 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
+const multer = require('multer');
 dotenv.config();
 const app = express();
 app.use(bodyParser.json());
+
+const upload = multer({
+    storage: multer.memoryStorage(),
+});
+app.use(upload.any());
 
 // Connect DB
 require('./src/config/database/index');
