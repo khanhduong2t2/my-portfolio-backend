@@ -4,7 +4,6 @@ const ItemApp = require('../../models/item_app');
 const AppController = {
     createContentApp: async (req, res) => {
         try {
-            console.log('Call API createContentApp')
             let { content_en, content_vi, key, type } = req.body;
 
             if (!key) return res.status(400).json({ status: false, message: "key is required!" });
