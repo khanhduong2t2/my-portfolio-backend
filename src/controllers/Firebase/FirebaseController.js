@@ -1,5 +1,3 @@
-// const { firebase } = require('./firebase-config');
-const { v4: uuidv4 } = require('uuid');
 const firebase = require('firebase/app');
 const { getStorage, ref, uploadBytes, getDownloadURL } = require('firebase/storage');
 

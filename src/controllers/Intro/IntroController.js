@@ -1,4 +1,5 @@
 const InfoIntro = require('../../models/info_intro');
+const Content = require('../../models/content');
 
 const IntroController = {
     createInfoIntro: async (req, res) => {
@@ -72,6 +73,47 @@ const IntroController = {
                 data: titleBanner,
             });
 
+        } catch (err) {
+            return res.status(500).json({
+                status: false,
+                message: err.message
+            });
+        };
+    },
+
+    getContentIntro: async (req, res) => {
+        try {
+            let { key } = req.query;
+            let { lang } = req.headers;
+
+            if (!key) return res.status(400).json({ status: false, message: "key is required!" });
+
+            if (!lang) {
+                lang = "en";
+            };
+
+            let content = lang === "en" ? "content_en" : "content_vi";
+
+            const pipeline = [
+                {
+                    $match: {
+                        key: key
+                    },
+                },
+                {
+                    $project: {
+                        key: 1,
+                        type: 1,
+                        content: `$${content}`, // Đổi tên field
+                    },
+                },
+            ];
+            const contentApp = await Content.aggregate(pipeline);
+
+            return res.status(200).json({
+                status: true,
+                data: contentApp,
+            });
         } catch (err) {
             return res.status(500).json({
                 status: false,

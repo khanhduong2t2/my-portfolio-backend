@@ -1,4 +1,5 @@
 const Menu = require('../../models/menu');
+const Image = require('../../models/image');
 
 const CommonController = {
     createItemMenu: async (req, res) => {
@@ -60,6 +61,67 @@ const CommonController = {
             return res.status(200).json({
                 status: true,
                 data: menu,
+            });
+
+        } catch (err) {
+            return res.status(500).json({
+                status: false,
+                message: err.message
+            });
+        };
+    },
+
+    saveUrlImage: async (req, res) => {
+        try {
+            let { name, url, key } = req.body;
+
+            if (!key) return res.status(400).json({ status: false, message: "key is required!" });
+            if (!url) return res.status(400).json({ status: false, message: "url is required!" });
+            if (!name) return res.status(400).json({ status: false, message: "name is required!" });
+
+            let newImage = new Image({
+                key,
+                url,
+                name,
+            });
+
+            await newImage.save()
+                .then(() => {
+                    return res.status(200).json({
+                        status: true,
+                        message: 'Create Successfully!',
+                    })
+                })
+                .catch((err) => {
+                    return res.status(400).json({
+                        status: false,
+                        message: err.message,
+                    })
+                });
+        } catch (err) {
+            return res.status(500).json({
+                status: false,
+                message: err.message
+            });
+        };
+    },
+
+    getUrlImage: async (req, res) => {
+        try {
+            let { key } = req.query;
+
+            const pipeline = [
+                {
+                    $match: {
+                        key,
+                    },
+                },
+            ];
+            const listImage = await Image.aggregate(pipeline);
+
+            return res.status(200).json({
+                status: true,
+                data: listImage,
             });
 
         } catch (err) {
