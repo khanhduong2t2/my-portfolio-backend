@@ -24,15 +24,7 @@ app.use('/v1/portfolio/intro', introRouter);
 app.use('/v1/portfolio/common', commonRouter);
 
 app.get('/', (req, res) => {
-    res.send(`<!DOCTYPE html>
-    <html>
-    <head>
-        <title>BizflyCloud App Engine</title>
-    </head>
-    <body>
-        <p>My Portfolio</p>
-    </body>
-    </html>`);
+    res.send('SERVER ON');
 });
 
 const PORT = process.env.PORT;
