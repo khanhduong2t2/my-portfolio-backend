@@ -1,9 +1,13 @@
 const mongoose = require('mongoose');
 const { connection } = require('../config/database/index');
 
-const ItemApp = new mongoose.Schema(
+const DetailApp = new mongoose.Schema(
     {
         key: {
+            type: String,
+            required: true,
+        },
+        img_intro: {
             type: String,
             required: true,
         },
@@ -16,26 +20,14 @@ const ItemApp = new mongoose.Schema(
             required: true,
         },
         content_vi: {
-            type: String,
+            type: Array,
             required: true,
         },
         content_en: {
-            type: String,
-            required: true,
-        },
-        img_intro: {
-            type: String,
-            required: true,
-        },
-        number_star: {
-            type: Number,
-            required: false,
-        },
-        arr_language: {
             type: Array,
-            required: false,
+            required: true,
         },
-        arr_link: {
+        arr_feature: {
             type: Array,
             required: false,
         }
@@ -45,4 +37,4 @@ const ItemApp = new mongoose.Schema(
     }
 );
 
-module.exports = connection.model('item_apps', ItemApp);
+module.exports = connection.model('detail_apps', DetailApp);

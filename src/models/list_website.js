@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const { connection } = require('../config/database/index');
 
-const ItemApp = new mongoose.Schema(
+const ListWebsite = new mongoose.Schema(
     {
         key: {
             type: String,
@@ -27,10 +27,6 @@ const ItemApp = new mongoose.Schema(
             type: String,
             required: true,
         },
-        number_star: {
-            type: Number,
-            required: false,
-        },
         arr_language: {
             type: Array,
             required: false,
@@ -45,4 +41,4 @@ const ItemApp = new mongoose.Schema(
     }
 );
 
-module.exports = connection.model('item_apps', ItemApp);
+module.exports = connection.model('list_websites', ListWebsite);

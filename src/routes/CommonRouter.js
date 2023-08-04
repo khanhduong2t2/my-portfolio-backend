@@ -11,4 +11,6 @@ router.get('/get-url-image', CommonController.getUrlImage);
 
 router.post('/upload-images-firebase', FirebaseController.uploadMultipleImages);
 
+router.get('/get-list-products', CommonController.getListProducts);
+
 module.exports = router;

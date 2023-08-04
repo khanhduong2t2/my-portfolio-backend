@@ -1,5 +1,7 @@
 const Menu = require('../../models/menu');
 const Image = require('../../models/image');
+const ItemApp = require('../../models/item_app');
+const ListWebsite = require('../../models/list_website');
 
 const CommonController = {
     createItemMenu: async (req, res) => {
@@ -124,6 +126,50 @@ const CommonController = {
                 data: listImage,
             });
 
+        } catch (err) {
+            return res.status(500).json({
+                status: false,
+                message: err.message
+            });
+        };
+    },
+
+    getListProducts: async (req, res) => {
+        try {
+            let { lang } = req.headers;
+
+            if (!lang) {
+                lang = "en";
+            };
+
+            let content = lang === "en" ? "content_en" : "content_vi";
+            let name = lang === "en" ? "name_en" : "name_vi";
+
+            const pipeline = [
+                {
+                    $project: {
+                        key: 1,
+                        img_intro: 1,
+                        content: `$${content}`, // Đổi tên field
+                        name: `$${name}`, // Đổi tên field
+                    },
+                },
+            ];
+            const listApp = await ItemApp.aggregate(pipeline);
+            const listWeb = await ListWebsite.aggregate(pipeline);
+
+            for (let item of listApp) {
+                item.type = 'app'
+            }
+
+            for (let item of listWeb) {
+                item.type = 'website'
+            }
+
+            return res.status(200).json({
+                status: true,
+                data: [...listApp, ...listWeb],
+            });
         } catch (err) {
             return res.status(500).json({
                 status: false,
